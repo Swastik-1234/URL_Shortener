@@ -1,0 +1,33 @@
+# Node.js dependencies
+node_modules/
+
+# Log files
+*.log
+
+# Environment variables
+.env
+
+# MongoDB data files (if any)
+*.db
+
+# Docker files (optional, if you have Docker-related files)
+.docker/
+docker-compose.override.yml
+
+# IDE/Editor specific files
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Build directories (if any, like for TypeScript or front-end build tools)
+dist/
+build/
+
+# npm package lock file (optional, if you don't want to track changes to this file)
+# package-lock.json
+
+# Jest or other test coverage reports
+coverage/

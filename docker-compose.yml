@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - '6380:6379'
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '2181:2181'
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    ports:
+      - '9092:9092'  # for host access
+      - '29092:29092' # for internal Docker access
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  app:
+    build: .
+    container_name: app
+    depends_on:
+      - mongo
+      - redis
+      - kafka
+    ports:
+      - '5000:5000'
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/url_shortener
+      - REDIS_URL=redis://redis:6379
+      - KAFKA_BROKER=kafka:29092
+      - URL_VISITS_TOPIC=url-analytics
+      - PORT=5000
+    volumes:
+      - .:/usr/src/app
+    command: ["npm", "start"]
+
+volumes:
+  mongo-data:

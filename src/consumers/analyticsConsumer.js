@@ -1,34 +1,4 @@
-// const { Kafka } = require('kafkajs');
 
-// const kafka = new Kafka({
-//   clientId: 'analytics-service',
-//   brokers: [process.env.KAFKA_BROKER || 'kafka:9092']
-// });
-
-// const consumer = kafka.consumer({ groupId: 'analytics-group' });
-
-// async function startAnalyticsConsumer(retries = 5, delay = 5000) {
-//   for (let i = 0; i < retries; i++) {
-//     try {
-//       await consumer.connect();
-//       await consumer.subscribe({ topic: 'url-analytics', fromBeginning: false });
-//       await consumer.run({
-//         eachMessage: async ({ message }) => {
-//           const data = JSON.parse(message.value.toString());
-//           console.log('📊 Received analytics:', data);
-//         }
-//       });
-//       console.log('✅ Kafka consumer connected');
-//       break;
-//     } catch (err) {
-//       console.error(`❌ Kafka connection failed. Retry ${i + 1}/${retries}`, err.message);
-//       if (i < retries - 1) await new Promise(res => setTimeout(res, delay));
-//       else throw new Error('Failed to connect to Kafka after retries.');
-//     }
-//   }
-// }
-
-// module.exports = startAnalyticsConsumer;
 
 
 

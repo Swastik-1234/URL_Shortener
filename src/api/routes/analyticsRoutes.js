@@ -1,23 +1,4 @@
-// // src/api/routes/analyticsRoutes.js
-// const express = require('express');
-// const router = express.Router();
-// const Analytics = require('../../db/models/analyticsModel');
 
-// router.get('/analytics/:shortUrl', async (req, res) => {
-//   try {
-//     const { shortUrl } = req.params;
-//     const records = await Analytics.find({ shortUrl }).sort({ timestamp: -1 });
-
-//     res.json({ shortUrl, totalVisits: records.length, visits: records });
-//   } catch (err) {
-//     console.error('Error fetching analytics:', err);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
-// module.exports = router;
-
-// src/api/routes/analyticsRoutes.js
 
 
 // const express = require('express');

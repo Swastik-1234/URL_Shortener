@@ -59,7 +59,7 @@ services:
       - MONGO_URI=mongodb://mongo:27017/url_shortener
       - REDIS_URL=redis://redis:6379
       - KAFKA_BROKER=kafka:29092
-      - URL_VISITS_TOPIC=url-analytics
+      - URL_VISITS_TOPIC=url_visits
       - PORT=5000
     volumes:
       - .:/usr/src/app

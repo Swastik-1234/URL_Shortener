@@ -6,11 +6,13 @@ const urlRoutes = require('./src/api/routes/urlRoutes');
 const connectKafkaProducer = require('./src/services/kafkaProducer');
 const redisClient = require('./src/services/cacheService');
 const startAnalyticsConsumer = require('./src/consumers/analyticsConsumer');
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 // Rate Limiter Middleware
 app.use(rateLimiter);
